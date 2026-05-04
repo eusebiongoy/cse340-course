@@ -1,0 +1,26 @@
+{
+  "name": "cse340-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eusebiongoy/cse340-course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/eusebiongoy/cse340-course/issues"
+  },
+  "homepage": "https://github.com/eusebiongoy/cse340-course#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
