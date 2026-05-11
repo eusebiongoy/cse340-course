@@ -8,11 +8,37 @@
 
         <h2>Upcoming Service Projects</h2>
 
-        <ul class="project-list">
-            <li>Park Cleanup - Join us to clean up local parks and make them beautiful!</li>
-            <li>Food Drive - Help collect and distribute food to those in need.</li>
-            <li>Community Tutoring - Volunteer to tutor students in various subjects.</li>
-        </ul>
+        <table class="project-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Project</th>
+                    <th>Organization</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% projects.forEach(project=> { %>
+                    <% const date=new Date(project.projectdate); const formattedDate=date.toLocaleDateString('en-US', {
+                        year: 'numeric' , month: 'long' , day: 'numeric' }); let orgClass="" ; if
+                        (project.organization_name==="BrightFuture Builders" ) { orgClass="org-blue" ; } else if
+                        (project.organization_name==="GreenHarvest Growers" ) { orgClass="org-green" ; } else if
+                        (project.organization_name==="UnityServe Volunteers" ) { orgClass="org-orange" ; } %>
+
+                        <tr class="<%= orgClass %>">
+                            <td>
+                                <%= formattedDate %>
+                            </td>
+                            <td>
+                                <%= project.title %>
+                            </td>
+                            <td>
+                                <%= project.organization_name %>
+                            </td>
+                        </tr>
+                        <% }) %>
+            </tbody>
+        </table>
 
     </main>
 

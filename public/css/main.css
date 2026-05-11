@@ -86,6 +86,7 @@ nav {
     }
 }
 
+/* ===== FOOTER ===== */
 .site-footer {
     background-color: #1f2937;
     color: white;
@@ -94,4 +95,109 @@ nav {
     margin-top: 50px;
     font-size: 14px;
     border-top: 3px solid #3b82f6;
+}
+
+/* =======================================================
+   PROJECT TABLE
+======================================================= */
+
+.project-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-size: 15px;
+}
+
+.project-table thead {
+    background-color: #1f2937;
+    color: white;
+}
+
+.project-table th,
+.project-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.project-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: 0.2s;
+}
+
+.project-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* =======================================================
+   ORGANIZATION GRID (CARDS)
+======================================================= */
+
+.org-grid {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* CARD BASE */
+.org-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    background-color: white;
+}
+
+.org-card:hover {
+    transform: translateY(-5px);
+}
+
+/* LOGO */
+.org-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* TEXT */
+.org-content h3 {
+    margin: 10px 0 5px;
+}
+
+.org-content p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.org-content .email {
+    font-size: 13px;
+    color: #777;
+}
+
+/* =======================================================
+   ORGANIZATION COLORS (SHARED SYSTEM)
+======================================================= */
+
+.org-blue {
+    background-color: #e3f2fd;
+}
+
+.org-green {
+    background-color: #e8f5e9;
+}
+
+.org-orange {
+    background-color: #fff3e0;
 }

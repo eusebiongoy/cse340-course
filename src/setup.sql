@@ -21,3 +21,48 @@ VALUES
 ('BrightFuture Builders', 'A nonprofit focused on improving community infrastructure through sustainable construction projects.', 'info@brightfuturebuilders.org', 'brightfuture-logo.png'),
 ('GreenHarvest Growers', 'An urban farming collective promoting food sustainability and education in local neighborhoods.', 'contact@greenharvest.org', 'greenharvest-logo.png'),
 ('UnityServe Volunteers', 'A volunteer coordination group supporting local charities and service initiatives.', 'hello@unityserve.org', 'unityserve-logo.png');
+
+-- ========================================
+-- Project Table
+-- ========================================
+DROP TABLE IF EXISTS Projects;
+
+CREATE TABLE Projects (
+    ProjectID SERIAL PRIMARY KEY,
+    OrganizationID INT NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Location VARCHAR(255),
+    ProjectDate DATE,
+
+    CONSTRAINT fk_organization
+        FOREIGN KEY (OrganizationID)
+        REFERENCES organization(organization_id)
+);
+
+INSERT INTO Projects
+(OrganizationID, Title, Description, Location, ProjectDate)
+VALUES
+
+-- Organization 1
+(1, 'Community Cleanup', 'Cleaning public parks and streets', 'Lubumbashi', '2026-06-10'),
+(1, 'Food Donation Drive', 'Providing meals to low-income families', 'Kolwezi', '2026-06-15'),
+(1, 'Tree Planting Campaign', 'Planting trees in schools and communities', 'Likasi', '2026-06-20'),
+(1, 'School Supply Distribution', 'Giving school materials to children', 'Lubumbashi', '2026-06-25'),
+(1, 'Health Awareness Workshop', 'Teaching disease prevention and hygiene', 'Kasumbalesa', '2026-06-30'),
+
+-- Organization 2
+(2, 'Youth Sports Tournament', 'Organizing football matches for youth', 'Lubumbashi', '2026-07-05'),
+(2, 'Blood Donation Event', 'Collecting blood donations for hospitals', 'Kolwezi', '2026-07-08'),
+(2, 'Computer Training Program', 'Teaching basic computer skills', 'Likasi', '2026-07-12'),
+(2, 'Women Empowerment Seminar', 'Training women in entrepreneurship', 'Lubumbashi', '2026-07-18'),
+(2, 'Charity Fundraiser', 'Raising funds for orphanages', 'Kasumbalesa', '2026-07-25'),
+
+-- Organization 3
+(3, 'River Cleanup Project', 'Removing waste from rivers', 'Likasi', '2026-08-02'),
+(3, 'Free Medical Checkup', 'Offering free health screenings', 'Lubumbashi', '2026-08-07'),
+(3, 'Community Gardening', 'Building community vegetable gardens', 'Kolwezi', '2026-08-10'),
+(3, 'Literacy Program', 'Teaching reading and writing skills', 'Kasumbalesa', '2026-08-15'),
+(3, 'Clothing Donation Campaign', 'Distributing clothes to families in need', 'Lubumbashi', '2026-08-20');
+
+SELECT * FROM Projects;
