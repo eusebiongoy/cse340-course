@@ -3,7 +3,8 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import { testConnection } from './src/models/db.js';
 import { getAllOrganizations } from './src/models/organizations.js';
-import { getAllProjects } from './src/models/projects.js';
+import { getAllProjects, getProjectsByCategory } from './src/models/projects.js';
+import { getAllCategories } from './src/models/categories.js';
 
 // Environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
@@ -26,32 +27,53 @@ app.set('views', path.join(__dirname, 'src/views'));
 /**
  * Routes
  */
+
+// Home
 app.get('/', (req, res) => {
     const title = 'Home';
     res.render('home', { title });
 });
 
+// Organizations
 app.get('/organizations', async (req, res) => {
     const organizations = await getAllOrganizations();
-    console.log(organizations);
 
     const title = 'Our Partner Organizations';
 
     res.render('organizations', { title, organizations });
 });
 
+// Projects (ALL)
 app.get('/projects', async (req, res) => {
     const projects = await getAllProjects();
-    console.log(projects);
 
     const title = 'Service Projects';
 
     res.render('projects', { title, projects });
 });
 
-app.get('/categories', (req, res) => {
+// Categories (ALL)
+app.get('/categories', async (req, res) => {
+    const categories = await getAllCategories();
+
+    console.log("CATEGORIES IN SERVER:", categories);
+
     const title = 'Categories';
-    res.render('categories', { title });
+
+    res.render('categories', { title, categories });
+});
+
+// Categories → Filtered Projects
+app.get('/categories/:id', async (req, res) => {
+    const categoryId = req.params.id;
+
+    const projects = await getProjectsByCategory(categoryId);
+
+    console.log("PROJECTS BY CATEGORY:", projects);
+
+    const title = 'Category Projects';
+
+    res.render('projects', { title, projects });
 });
 
 /**

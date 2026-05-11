@@ -9,12 +9,25 @@
         <h2>Categories</h2>
 
         <section class="categories">
-            <ul class="category-list">
-                <li>Environmental</li>
-                <li>Educational</li>
-                <li>Community Service</li>
-                <li>Health and Wellness</li>
-            </ul>
+
+            <div class="category-grid">
+
+                <% categories.forEach(category=> { %>
+
+                    <a href="/categories/<%= category.category_id %>" class="category-card-link">
+
+                        <div class="category-card">
+                            <h3>
+                                <%= category.name %>
+                            </h3>
+                        </div>
+
+                    </a>
+
+                    <% }) %>
+
+            </div>
+
         </section>
 
     </main>

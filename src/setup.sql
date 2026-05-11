@@ -66,3 +66,64 @@ VALUES
 (3, 'Clothing Donation Campaign', 'Distributing clothes to families in need', 'Lubumbashi', '2026-08-20');
 
 SELECT * FROM Projects;
+
+-- DROP FIRST (safe reset)
+DROP TABLE IF EXISTS project_categories;
+DROP TABLE IF EXISTS categories;
+
+-- =========================
+-- CATEGORIES TABLE
+-- =========================
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- Sample categories
+INSERT INTO categories (name) VALUES
+('Community Service'),
+('Education'),
+('Health'),
+('Environment'),
+('Youth Development');
+
+-- =========================
+-- PROJECT_CATEGORIES TABLE
+-- =========================
+CREATE TABLE project_categories (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    FOREIGN KEY (project_id)
+        REFERENCES projects(projectid)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (category_id)
+        REFERENCES categories(category_id)
+        ON DELETE CASCADE
+);
+
+-- BrightFuture Builders
+INSERT INTO project_categories VALUES (1, 1);
+INSERT INTO project_categories VALUES (2, 1);
+INSERT INTO project_categories VALUES (2, 2);
+INSERT INTO project_categories VALUES (4, 2);
+INSERT INTO project_categories VALUES (5, 3);
+
+-- GreenHarvest Growers
+INSERT INTO project_categories VALUES (6, 5);
+INSERT INTO project_categories VALUES (7, 3);
+INSERT INTO project_categories VALUES (8, 2);
+INSERT INTO project_categories VALUES (9, 5);
+INSERT INTO project_categories VALUES (10, 1);
+
+-- UnityServe Volunteers
+INSERT INTO project_categories VALUES (11, 1);
+INSERT INTO project_categories VALUES (12, 3);
+INSERT INTO project_categories VALUES (13, 4);
+INSERT INTO project_categories VALUES (14, 2);
+INSERT INTO project_categories VALUES (15, 1);
+
+SELECT * FROM Categories;
