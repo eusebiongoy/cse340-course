@@ -1,47 +1,25 @@
-<%- include('partials/header', { title }) %>
+<%- include('partials/header') %>
 
-    <main class="container">
-
+    <main>
         <h1>
             <%= title %>
         </h1>
 
         <p>Here are a few of our partner organizations:</p>
 
-        <ul class="org-grid">
-
+        <ul>
             <% organizations.forEach(organization=> { %>
+                <li>
+                    <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
 
-                <% let orgClass="" ; if (organization.name==="BrightFuture Builders" ) { orgClass="org-blue" ; } else if
-                    (organization.name==="GreenHarvest Growers" ) { orgClass="org-green" ; } else if
-                    (organization.name==="UnityServe Volunteers" ) { orgClass="org-orange" ; } %>
+                    <a href="/organization/<%= organization.organization_id %>">
+                        <%= organization.name %>
+                    </a>
 
-                    <li class="org-card <%= orgClass %>">
-
-                        <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
-
-                        <div class="org-content">
-
-                            <h3>
-                                <%= organization.name %>
-                            </h3>
-
-                            <p>
-                                <%= organization.description %>
-                            </p>
-
-                            <p class="email">
-                                <%= organization.contact_email %>
-                            </p>
-
-                        </div>
-
-                    </li>
-
-                    <% }); %>
-
+                    : <%= organization.contact_email %>
+                </li>
+                <% }); %>
         </ul>
-
     </main>
 
     <%- include('partials/footer') %>

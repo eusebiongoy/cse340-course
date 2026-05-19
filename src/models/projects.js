@@ -3,7 +3,7 @@ import db from './db.js';
 /**
  * Get all projects with organization + categories
  */
-export async function getAllProjects() {
+async function getAllProjects() {
     const result = await db.query(`
         SELECT 
             p.projectid,
@@ -52,3 +52,24 @@ export async function getProjectsByCategory(categoryId) {
 
     return result.rows;
 }
+
+const getProjectsByOrganizationId = async (organizationId) => {
+    const query = `
+        SELECT
+            projectid,
+            organizationid,
+            title,
+            description,
+            location,
+            projectdate
+        FROM projects
+        WHERE organizationid = $1
+        ORDER BY projectdate;
+    `;
+
+    const result = await db.query(query, [organizationId]);
+    return result.rows;
+};
+
+// Export the model functions
+export { getAllProjects, getProjectsByOrganizationId };
