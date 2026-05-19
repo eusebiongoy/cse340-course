@@ -32,7 +32,7 @@ async function getAllProjects() {
 /**
  * Get projects filtered by category
  */
-export async function getProjectsByCategory(categoryId) {
+async function getProjectsByCategory(categoryId) {
     const result = await db.query(`
         SELECT 
             p.projectid,
@@ -53,6 +53,9 @@ export async function getProjectsByCategory(categoryId) {
     return result.rows;
 }
 
+/**
+ * Get projects by organization
+ */
 const getProjectsByOrganizationId = async (organizationId) => {
     const query = `
         SELECT
@@ -94,7 +97,7 @@ async function getUpcomingProjects(number_of_projects) {
 
     const result = await db.query(query, [number_of_projects]);
     return result.rows;
-}
+};
 
 /**
  * Get single project by ID
@@ -117,12 +120,31 @@ async function getProjectDetails(id) {
 
     const result = await db.query(query, [id]);
     return result.rows[0];
-}
+};
 
-// Export the model functions
+/**
+ * Get categories for a specific project
+ */
+async function getCategoriesByProjectId(projectId) {
+    const result = await db.query(`
+        SELECT c.category_id, c.name
+        FROM categories c
+        JOIN project_categories pc
+            ON c.category_id = pc.category_id
+        WHERE pc.project_id = $1
+        ORDER BY c.name;
+    `, [projectId]);
+
+    return result.rows;
+};
+
+
+// Export model functions (NO DUPLICATES)
 export { 
     getAllProjects, 
     getProjectsByOrganizationId,
     getUpcomingProjects,
-    getProjectDetails
+    getProjectDetails,
+    getProjectsByCategory,
+    getCategoriesByProjectId
 };

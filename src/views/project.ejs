@@ -31,6 +31,22 @@
                 </a>
             </p>
 
+            <!-- NEW: Category Tags -->
+            <p>
+                <strong>Categories:</strong><br>
+
+                <% if (categories && categories.length> 0) { %>
+                    <% categories.forEach(category=> { %>
+                        <a href="/category/<%= category.category_id %>" class="tag">
+                            <%= category.name %>
+                        </a>
+                        <% }) %>
+                            <% } else { %>
+                                <span>No categories assigned</span>
+                                <% } %>
+
+            </p>
+
         </section>
 
     </main>
