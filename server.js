@@ -19,6 +19,10 @@ const app = express();
   * Configure Express middleware
   */
 
+// Allow Express to receive and process POST data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -42,9 +46,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Allow Express to receive and process POST data
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 // Use the imported router to handle routes
 app.use(router);
