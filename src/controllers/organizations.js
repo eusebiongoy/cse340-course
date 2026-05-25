@@ -36,4 +36,4 @@ const showNewOrganizationForm = async (req, res) => {
 
 
 // Export controller functions
-export { showOrganizationsPage, showOrganizationDetailsPage };
+export { showOrganizationsPage, showOrganizationDetailsPage, showNewOrganizationForm };
