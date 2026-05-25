@@ -271,3 +271,81 @@ footer:hover {
     margin: 0;
     font-size: 18px;
 }
+
+/* ===== NEW ORGANIZATION FORM STYLING ===== */
+
+main h1 {
+    text-align: center;
+    margin-top: 25px;
+    color: #1f2937;
+}
+
+/* Center the form */
+main form {
+    max-width: 550px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Each field group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+/* Labels */
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #1f2937;
+    font-size: 14px;
+}
+
+/* Inputs + textarea */
+.form-group input,
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+/* Focus effect */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Textarea height */
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Submit button */
+main form button {
+    width: 100%;
+    padding: 12px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Hover effect */
+main form button:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}

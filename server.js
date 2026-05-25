@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -42,6 +41,10 @@ app.use((req, res, next) => {
     res.locals.NODE_ENV = NODE_ENV;
     next();
 });
+
+// Allow Express to receive and process POST data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Use the imported router to handle routes
 app.use(router);
