@@ -37,3 +37,28 @@ export async function getServiceProjectsByCategoryId(categoryId) {
 
     return result.rows;
 }
+
+
+
+
+async function assignCategoryToProject(projectId, categoryId) {
+    const result = await db.query(`
+        INSERT INTO project_categories (project_id, category_id)
+        VALUES ($1, $2);
+    `, [projectId, categoryId]);
+
+    return result;
+}
+
+export async function updateCategoryAssignments(projectId, categoryIds) {
+    // remove old assignments
+    await db.query(`
+        DELETE FROM project_categories
+        WHERE project_id = $1;
+    `, [projectId]);
+
+    // add new assignments
+    for (const categoryId of categoryIds) {
+        await assignCategoryToProject(projectId, categoryId);
+    }
+}
