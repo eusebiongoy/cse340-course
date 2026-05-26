@@ -124,9 +124,7 @@ footer:hover {
     transition: background 0.3s ease;
 }
 
-/* =======================================================
-   PROJECT TABLE
-======================================================= */
+/* ===== PROJECT TABLE ===== */
 
 .project-table {
     width: 100%;
@@ -159,9 +157,7 @@ footer:hover {
     background-color: #f1f5f9;
 }
 
-/* =======================================================
-   ORGANIZATION GRID (CARDS)
-======================================================= */
+/* ===== ORGANIZATION GRID ===== */
 
 .org-grid {
     list-style: none;
@@ -172,7 +168,7 @@ footer:hover {
     gap: 20px;
 }
 
-/* CARD BASE */
+/* CARD */
 .org-card {
     display: flex;
     flex-direction: column;
@@ -214,7 +210,7 @@ footer:hover {
     color: #777;
 }
 
-/* VIEW LINK */
+/* LINKS */
 .org-content a {
     display: inline-block;
     margin-top: 10px;
@@ -227,10 +223,7 @@ footer:hover {
     text-decoration: underline;
 }
 
-/* =======================================================
-   ORGANIZATION COLORS (SHARED SYSTEM)
-======================================================= */
-
+/* COLORS */
 .org-blue {
     background-color: #e3f2fd;
 }
@@ -272,89 +265,96 @@ footer:hover {
     font-size: 18px;
 }
 
-/* ===== NEW ORGANIZATION FORM STYLING ===== */
+/* ===== FORM (PROFESSIONAL FIXED VERSION) ===== */
 
 main h1 {
     text-align: center;
-    margin-top: 25px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 28px;
     color: #1f2937;
 }
 
-/* Center the form */
-main form {
-    max-width: 550px;
-    margin: 30px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+/* FORM CONTAINER */
+.org-form {
+    max-width: 560px;
+    margin: 40px auto 70px auto;
+    background: #ffffff;
+    padding: 34px;
+    border-radius: 14px;
+    border: 1px solid #eef2f7;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
 }
 
-/* Each field group */
-.form-group {
+/* FORM GROUP */
+.org-form .form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 18px;
 }
 
-/* Labels */
-.form-group label {
-    font-weight: bold;
+/* LABELS */
+.org-form label {
+    font-weight: 600;
+    font-size: 14px;
     margin-bottom: 6px;
-    color: #1f2937;
-    font-size: 14px;
+    color: #111827;
 }
 
-/* Inputs + textarea */
-.form-group input,
-.form-group textarea {
-    padding: 10px 12px;
+/* INPUTS + TEXTAREA */
+.org-form input,
+.org-form textarea {
+    padding: 11px 12px;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 14px;
-    transition: all 0.2s ease;
     font-family: inherit;
+    transition: all 0.2s ease;
+    background: #fff;
 }
 
-/* Focus effect */
-.form-group input:focus,
-.form-group textarea:focus {
+/* FOCUS */
+.org-form input:focus,
+.org-form textarea:focus {
     outline: none;
     border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
-/* Textarea height */
-.form-group textarea {
-    min-height: 120px;
+/* TEXTAREA */
+.org-form textarea {
+    min-height: 130px;
     resize: vertical;
 }
 
-/* Submit button */
-main form button {
+/* BUTTON */
+.org-form button {
     width: 100%;
     padding: 12px;
-    background: #3b82f6;
-    color: white;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    color: white;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
-/* Hover effect */
-main form button:hover {
-    background: #2563eb;
+.org-form button:hover {
     transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
 }
 
-/* Flash message styles */
+.org-form button:active {
+    transform: translateY(0);
+}
+
+/* ===== ALERTS ===== */
+
 .alert {
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid transparent;
     border-radius: 4px;
 }
 

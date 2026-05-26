@@ -2,7 +2,8 @@
 import {
     getAllOrganizations,
     getOrganizationDetails,
-    createOrganization
+    createOrganization,
+    updateOrganization
 } from '../models/organizations.js';
 
 import { getProjectsByOrganizationId } from '../models/projects.js';
@@ -85,11 +86,45 @@ const processNewOrganizationForm = async (req, res) => {
     res.redirect(`/organization/${organizationId}`);
 };
 
+const showEditOrganizationForm = async (req, res) => {
+    const organizationId = req.params.id;
+    const organizationDetails = await getOrganizationDetails(organizationId);
+
+    const title = 'Edit Organization';
+    res.render('edit-organization', { title, organizationDetails });
+};
+
+const processEditOrganizationForm = async (req, res) => {
+    const organizationId = req.params.id;
+    const { name, description, contactEmail, logoFilename } = req.body;
+
+    // Check for validation errors
+    const results = validationResult(req);
+    if (!results.isEmpty()) {
+        // Validation failed - loop through errors
+        results.array().forEach((error) => {
+            req.flash('error', error.msg);
+        });
+
+        // Redirect back to the edit organization form
+        return res.redirect('/edit-organization/' + organizationId);
+    }
+
+    await updateOrganization(organizationId, name, description, contactEmail, logoFilename);
+    
+    // Set a success flash message
+    req.flash('success', 'Organization updated successfully!');
+
+    res.redirect(`/organization/${organizationId}`);
+};
+
 // Export controller functions
 export {
     showOrganizationsPage,
     showOrganizationDetailsPage,
     showNewOrganizationForm,
     processNewOrganizationForm,
-    organizationValidation
+    organizationValidation,
+    showEditOrganizationForm,
+    processEditOrganizationForm
 };
