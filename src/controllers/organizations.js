@@ -7,6 +7,31 @@ import {
 
 import { getProjectsByOrganizationId } from '../models/projects.js';
 
+import { body, validationResult } from 'express-validator';
+
+// Define validation and sanitization rules for organization form
+// Define validation rules for organization form
+const organizationValidation = [
+    body('name')
+        .trim()
+        .notEmpty()
+        .withMessage('Organization name is required')
+        .isLength({ min: 3, max: 150 })
+        .withMessage('Organization name must be between 3 and 150 characters'),
+    body('description')
+        .trim()
+        .notEmpty()
+        .withMessage('Organization description is required')
+        .isLength({ max: 500 })
+        .withMessage('Organization description cannot exceed 500 characters'),
+    body('contactEmail')
+        .normalizeEmail()
+        .notEmpty()
+        .withMessage('Contact email is required')
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+];
+
 // Show all organizations page
 const showOrganizationsPage = async (req, res) => {
     const organizations = await getAllOrganizations();
@@ -31,7 +56,7 @@ const showOrganizationDetailsPage = async (req, res) => {
     });
 };
 
-// Add new organization form (ONLY ONE VERSION)
+// Show add new organization form
 const showNewOrganizationForm = async (req, res) => {
     const title = 'Add New Organization';
 
@@ -40,16 +65,23 @@ const showNewOrganizationForm = async (req, res) => {
 
 // Process new organization form submission
 const processNewOrganizationForm = async (req, res) => {
+    // Check for validation errors
+    const results = validationResult(req);
+    if (!results.isEmpty()) {
+        // Validation failed - loop through errors
+        results.array().forEach((error) => {
+            req.flash('error', error.msg);
+        });
+
+        // Redirect back to the new organization form
+        return res.redirect('/new-organization');
+    }
+
     const { name, description, contactEmail } = req.body;
-    const logoFilename = 'placeholder-logo.png';
+    const logoFilename = 'placeholder-logo.png'; // Use the placeholder logo for all new organizations    
 
-    const organizationId = await createOrganization(
-        name,
-        description,
-        contactEmail,
-        logoFilename
-    );
-
+    const organizationId = await createOrganization(name, description, contactEmail, logoFilename);
+    req.flash('success', 'Organization added successfully!');
     res.redirect(`/organization/${organizationId}`);
 };
 
@@ -58,5 +90,6 @@ export {
     showOrganizationsPage,
     showOrganizationDetailsPage,
     showNewOrganizationForm,
-    processNewOrganizationForm
+    processNewOrganizationForm,
+    organizationValidation
 };
