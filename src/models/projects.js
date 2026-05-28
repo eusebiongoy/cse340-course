@@ -162,8 +162,53 @@ const createProject = async (title, description, location, date, organizationId)
     return result.rows[0].project_id;
 };
 
+/**
+ * Update an existing project
+ */
+const updateProject = async (
+    projectId,
+    title,
+    description,
+    location,
+    date,
+    organizationId
+) => {
+    const query = `
+        UPDATE projects
+        SET
+            title = $1,
+            description = $2,
+            location = $3,
+            projectdate = $4,
+            organizationid = $5
+        WHERE projectid = $6
+        RETURNING projectid;
+    `;
 
-// Export model functions (NO DUPLICATES)
+    const queryParams = [
+        title,
+        description,
+        location,
+        date,
+        organizationId,
+        projectId
+    ];
+
+    const result = await db.query(query, queryParams);
+
+    if (result.rows.length === 0) {
+        throw new Error('Failed to update project');
+    }
+
+    if (process.env.ENABLE_SQL_LOGGING === 'true') {
+        console.log('Updated project with ID:', result.rows[0].projectid);
+    }
+
+    return result.rows[0].projectid;
+};
+
+
+// Export model functions
 export { 
     getAllProjects, 
     getProjectsByOrganizationId,
@@ -171,5 +216,6 @@ export {
     getProjectDetails,
     getProjectsByCategory,
     getCategoriesByProjectId,
-    createProject
+    createProject,
+    updateProject
 };

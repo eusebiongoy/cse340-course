@@ -125,7 +125,6 @@ footer:hover {
 }
 
 /* ===== PROJECT TABLE ===== */
-
 .project-table {
     width: 100%;
     border-collapse: collapse;
@@ -158,7 +157,6 @@ footer:hover {
 }
 
 /* ===== ORGANIZATION GRID ===== */
-
 .org-grid {
     list-style: none;
     padding: 0;
@@ -237,7 +235,6 @@ footer:hover {
 }
 
 /* ===== CATEGORY CARDS ===== */
-
 .category-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -265,56 +262,40 @@ footer:hover {
     font-size: 18px;
 }
 
-/* ===== FORM (PROFESSIONAL FIXED VERSION) ===== */
+/* ===== FORM (GLOBAL FIX - IMPORTANT) ===== */
 
-main h1 {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    font-size: 28px;
-    color: #1f2937;
-}
-
-/* FORM CONTAINER */
-.org-form {
-    max-width: 560px;
+form {
+    max-width: 600px;
     margin: 40px auto 70px auto;
     background: #ffffff;
     padding: 34px;
     border-radius: 14px;
     border: 1px solid #eef2f7;
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 /* FORM GROUP */
-.org-form .form-group {
+form .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 18px;
 }
 
 /* LABELS */
-.org-form label {
+form label {
     font-weight: 600;
     font-size: 14px;
     margin-bottom: 6px;
     color: #111827;
 }
 
-/* INPUTS + TEXTAREA */
-.org-form input,
-.org-form textarea {
-    padding: 11px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
-    transition: all 0.2s ease;
-    background: #fff;
-}
-
-/* SELECT (NEW ADDITION) */
-.org-form select {
+/* INPUTS / TEXTAREA / SELECT */
+form input,
+form textarea,
+form select {
     padding: 11px 12px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
@@ -325,45 +306,41 @@ main h1 {
 }
 
 /* FOCUS */
-.org-form input:focus,
-.org-form textarea:focus,
-.org-form select:focus {
+form input:focus,
+form textarea:focus,
+form select:focus {
     outline: none;
     border-color: #3b82f6;
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
 /* TEXTAREA */
-.org-form textarea {
-    min-height: 130px;
+form textarea {
+    min-height: 120px;
     resize: vertical;
 }
 
 /* BUTTON */
-.org-form button {
-    width: 100%;
+form button {
+    margin-top: 10px;
     padding: 12px;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    width: 100%;
     border: none;
     border-radius: 8px;
-    color: white;
     font-size: 15px;
     font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     cursor: pointer;
     transition: 0.2s ease;
 }
 
-.org-form button:hover {
+form button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
 }
 
-.org-form button:active {
-    transform: translateY(0);
-}
-
 /* ===== ALERTS ===== */
-
 .alert {
     padding: 15px;
     margin-bottom: 20px;
@@ -392,4 +369,40 @@ main h1 {
     color: #0c5460;
     background-color: #d1ecf1;
     border-color: #bee5eb;
+}
+
+/* ===== PROJECT DETAILS PAGE ===== */
+.project-details {
+    max-width: 800px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 14px;
+    border: 1px solid #eef2f7;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.project-details p {
+    margin-bottom: 18px;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.project-details strong {
+    color: #111827;
+}
+
+.tag {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin: 4px 6px 4px 0;
+    text-decoration: none;
+}
+
+.tag:hover {
+    background: #bae6fd;
 }

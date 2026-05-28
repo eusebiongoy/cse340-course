@@ -8,21 +8,35 @@
 
         <h2>Categories</h2>
 
+        <!-- ACTION BUTTON -->
+        <p style="margin-bottom: 20px;">
+            <a href="/new-category" class="tag">
+                + Create New Category
+            </a>
+        </p>
+
         <section class="categories">
 
             <div class="category-grid">
 
                 <% categories.forEach(category=> { %>
 
-                    <a href="/category/<%= category.category_id %>" class="category-card-link">
+                    <div class="category-card">
 
-                        <div class="category-card">
-                            <h3>
+                        <h3>
+                            <a href="/category/<%= category.category_id %>">
                                 <%= category.name %>
-                            </h3>
-                        </div>
+                            </a>
+                        </h3>
 
-                    </a>
+                        <!-- EDIT LINK -->
+                        <p style="margin-top: 10px;">
+                            <a href="/edit-category/<%= category.category_id %>" class="tag">
+                                Edit
+                            </a>
+                        </p>
+
+                    </div>
 
                     <% }) %>
 

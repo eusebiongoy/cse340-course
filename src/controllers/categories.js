@@ -1,9 +1,10 @@
-// Import any needed model functions
 import { 
     getAllCategories, 
     getCategoryById, 
     getServiceProjectsByCategoryId,
-    updateCategoryAssignments
+    updateCategoryAssignments,
+    createCategory,
+    updateCategory
 } from '../models/categories.js';
 
 import { getProjectDetails } from '../models/projects.js';
@@ -17,7 +18,8 @@ const showCategoriesPage = async (req, res) => {
     res.render('categories', { title, categories });
 };
 
-// NEW: Category details page
+
+// Category details page
 const showCategoryDetailsPage = async (req, res) => {
     const categoryId = req.params.id;
 
@@ -39,21 +41,86 @@ const showCategoryDetailsPage = async (req, res) => {
 
 
 // ================================
-// ADDED: ASSIGN CATEGORIES FEATURE
+// CREATE CATEGORY
 // ================================
 
-// Show assign categories form
+// Show create category form
+const showCreateCategoryForm = (req, res) => {
+    res.render('new-category', {
+        title: 'Create Category'
+    });
+};
+
+
+// Process create category form
+const processCreateCategory = async (req, res) => {
+    const { name } = req.body;
+
+    if (!name || name.trim().length < 3 || name.trim().length > 100) {
+        return res.status(400).render('new-category', {
+            title: 'Create Category',
+            error: 'Category name must be between 3 and 100 characters'
+        });
+    }
+
+    await createCategory(name.trim());
+    res.redirect('/categories');
+};
+
+
+// ================================
+// EDIT CATEGORY
+// ================================
+
+// Show edit category form
+const showEditCategoryForm = async (req, res) => {
+    const categoryId = req.params.id;
+
+    const category = await getCategoryById(categoryId);
+
+    if (!category) {
+        return res.status(404).send('Category not found');
+    }
+
+    res.render('edit-category', {
+        title: 'Edit Category',
+        category
+    });
+};
+
+
+// Process edit category form
+const processEditCategory = async (req, res) => {
+    const categoryId = req.params.id;
+    const { name } = req.body;
+
+    if (!name || name.trim().length < 3 || name.trim().length > 100) {
+        return res.status(400).render('edit-category', {
+            title: 'Edit Category',
+            category: { category_id: categoryId, name },
+            error: 'Category name must be between 3 and 100 characters'
+        });
+    }
+
+    await updateCategory(categoryId, name.trim());
+    res.redirect('/categories');
+};
+
+
+// ================================
+// ASSIGN CATEGORIES (
+// ================================
+
 const showAssignCategoriesForm = async (req, res) => {
     const projectId = req.params.projectId;
 
     const projectDetails = await getProjectDetails(projectId);
     const categories = await getAllCategories();
+
     const assignedCategories = await getServiceProjectsByCategoryId(projectId);
 
-    const title = 'Assign Categories to Project';
-
     res.render('assign-categories', {
-        title,
+        title: 'Assign Categories to Project',
         projectId,
         projectDetails,
         categories,
@@ -62,7 +129,6 @@ const showAssignCategoriesForm = async (req, res) => {
 };
 
 
-// Process assign categories form
 const processAssignCategoriesForm = async (req, res) => {
     const projectId = req.params.projectId;
 
@@ -82,6 +148,10 @@ const processAssignCategoriesForm = async (req, res) => {
 export { 
     showCategoriesPage,
     showCategoryDetailsPage,
+    showCreateCategoryForm,
+    processCreateCategory,
+    showEditCategoryForm,
+    processEditCategory,
     showAssignCategoriesForm,
     processAssignCategoriesForm
 };

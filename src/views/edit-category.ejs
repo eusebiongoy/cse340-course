@@ -1,0 +1,31 @@
+<%- include('partials/header', { title }) %>
+
+    <main>
+
+        <h1>
+            <%= title %>
+        </h1>
+
+        <% if (typeof error !=='undefined' ) { %>
+            <div class="alert error">
+                <%= error %>
+            </div>
+            <% } %>
+
+                <form class="org-form" action="/edit-category/<%= category.category_id %>" method="POST">
+
+                    <!-- Category Name -->
+                    <div class="form-group">
+                        <label for="name">Category Name</label>
+
+                        <input type="text" id="name" name="name" value="<%= category.name %>" required maxlength="100"
+                            placeholder="Enter category name">
+                    </div>
+
+                    <button type="submit">Update Category</button>
+
+                </form>
+
+    </main>
+
+    <%- include('partials/footer') %>

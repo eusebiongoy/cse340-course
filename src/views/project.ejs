@@ -1,60 +1,57 @@
 <%- include('partials/header', { title }) %>
 
-    <main class="container">
+    <main>
 
         <h1>
             <%= project.title %>
         </h1>
 
-        <section class="project-details">
+        <p><strong>Description:</strong>
+            <%= project.description %>
+        </p>
 
-            <p>
-                <strong>Description:</strong><br>
-                <%= project.description %>
-            </p>
+        <p><strong>Date:</strong>
+            <%= project.date %>
+        </p>
 
-            <p>
-                <strong>Date:</strong><br>
-                <%= new Date(project.date).toLocaleDateString('en-US', { year: 'numeric' , month: 'long' ,
-                    day: 'numeric' }) %>
-            </p>
+        <p><strong>Location:</strong>
+            <%= project.location %>
+        </p>
 
-            <p>
-                <strong>Location:</strong><br>
-                <%= project.location %>
-            </p>
+        <p>
+            <strong>Organization:</strong>
+            <a href="/organization/<%= project.organization_id %>">
+                <%= project.organization_name %>
+            </a>
+        </p>
 
-            <p>
-                <strong>Organization:</strong><br>
-                <a href="/organization/<%= project.organization_id %>">
-                    <%= project.organization_name %>
-                </a>
-            </p>
+        <p><strong>Categories:</strong></p>
 
-            <!-- NEW: Category Tags -->
-            <p>
-                <strong>Categories:</strong><br>
-
-                <% if (categories && categories.length> 0) { %>
-                    <% categories.forEach(category=> { %>
-                        <a href="/category/<%= category.category_id %>" class="tag">
+        <% if (categories && categories.length> 0) { %>
+            <ul>
+                <% categories.forEach(category=> { %>
+                    <li>
+                        <a href="/category/<%= category.category_id %>">
                             <%= category.name %>
                         </a>
-                        <% }) %>
-                            <% } else { %>
-                                <span>No categories assigned</span>
-                                <% } %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } else { %>
+                <p>No categories assigned</p>
+                <% } %>
 
-            </p>
+                    <p>
+                        <a href="/assign-categories/<%= project.project_id %>">
+                            Edit Categories
+                        </a>
+                    </p>
 
-            <!-- ✅ ADDED: Assign Categories Link -->
-            <p>
-                <a href="/assign-categories/<%= project.project_id %>">
-                    Edit Categories
-                </a>
-            </p>
-
-        </section>
+                    <p>
+                        <a href="/edit-project/<%= project.project_id %>">
+                            Edit Project
+                        </a>
+                    </p>
 
     </main>
 
