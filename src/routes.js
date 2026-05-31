@@ -33,6 +33,14 @@ import {
     processEditCategory
 } from './controllers/categories.js';
 
+import {
+    showUserRegistrationForm,
+    processUserRegistrationForm,
+    showLoginForm,
+    processLoginForm,
+    processLogout
+} from './controllers/users.js';
+
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -91,18 +99,26 @@ router.get('/category/:id', showCategoryDetailsPage);
 
 // CREATE CATEGORY
 router.get('/new-category', showCreateCategoryForm);
-
 router.post('/new-category', processCreateCategory);
 
 // EDIT CATEGORY
 router.get('/edit-category/:id', showEditCategoryForm);
-
 router.post('/edit-category/:id', processEditCategory);
 
 // ASSIGN CATEGORIES
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);
-
 router.post('/assign-categories/:projectId', processAssignCategoriesForm);
+
+// ================================
+// USER AUTH ROUTES
+// ================================
+router.get('/register', showUserRegistrationForm);
+router.post('/register', processUserRegistrationForm);
+
+// Login routes
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.get('/logout', processLogout);
 
 // ================================
 // ERROR TEST
