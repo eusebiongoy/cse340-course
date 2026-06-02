@@ -59,7 +59,7 @@ app.use((req, res, next) => {
         res.locals.isLoggedIn = true;
     }
 
-    // Make full user object available in all templates (includes role_name)
+    // ✅ FIX ADDED HERE (required for role-based UI)
     res.locals.user = req.session.user || null;
 
     res.locals.NODE_ENV = NODE_ENV;

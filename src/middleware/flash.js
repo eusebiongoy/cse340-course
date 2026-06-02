@@ -1,4 +1,3 @@
-
 /**
  * Flash Message Middleware
  * 
@@ -22,6 +21,12 @@ const flashMiddleware = (req, res, next) => {
      * - Called with 0 args: retrieves and clears all messages
      */
     req.flash = function(type, message) {
+
+        // ✅ FIX: prevent crash if session does not exist
+        if (!req.session) {
+            return;
+        }
+
         // Initialize flash storage if it doesn't exist
         if (!req.session.flash) {
             req.session.flash = {
@@ -79,8 +84,6 @@ const flashMiddleware = (req, res, next) => {
  */
 const flashLocals = (req, res, next) => {
     // Attach the flash function to res.locals so templates can access it
-    // The function is NOT called here, just made available
-    // Messages are only consumed when a template calls flash()
     res.locals.flash = req.flash;
     next();
 }

@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import db from '../models/db.js';
 import { createUser, authenticateUser } from '../models/users.js';
 
 const showUserRegistrationForm = (req, res) => {
@@ -107,6 +108,30 @@ const showDashboard = (req, res) => {
     });
 };
 
+//
+// 👇 NEW: USERS PAGE CONTROLLER (ADMIN ONLY VIEW)
+//
+const showUsersPage = async (req, res) => {
+    try {
+        const result = await db.query(`
+            SELECT u.user_id, u.name, u.email, r.role_name
+            FROM users u
+            JOIN roles r ON u.role_id = r.role_id
+            ORDER BY u.user_id
+        `);
+
+        res.render('users', {
+            title: 'Users',
+            users: result.rows
+        });
+
+    } catch (error) {
+        console.error('Error loading users page:', error);
+        req.flash('error', 'Unable to load users page');
+        res.redirect('/dashboard');
+    }
+};
+
 export {
     showUserRegistrationForm,
     showLoginForm,
@@ -115,5 +140,6 @@ export {
     processUserRegistrationForm,
     requireLogin,
     requireRole,
-    showDashboard
+    showDashboard,
+    showUsersPage
 };
