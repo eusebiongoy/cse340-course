@@ -49,9 +49,11 @@
 
         <!-- Add Project Link -->
         <div style="margin-top: 20px; text-align: center;">
-            <a href="/new-project" class="add-project-link">
-                + Add New Service Project
-            </a>
+            <% if (user && user.role_name==='admin' ) { %>
+                <a href="/new-project" class="add-project-link">
+                    + Add New Service Project
+                </a>
+                <% } %>
         </div>
 
     </main>

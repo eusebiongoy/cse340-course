@@ -80,6 +80,22 @@ const requireLogin = (req, res, next) => {
     next();
 };
 
+// NEW ROLE-BASED AUTHORIZATION MIDDLEWARE
+const requireRole = (role) => {
+    return (req, res, next) => {
+        if (
+            req.session &&
+            req.session.user &&
+            req.session.user.role_name === role
+        ) {
+            return next();
+        }
+
+        req.flash('error', 'You are not authorized to access that page.');
+        return res.redirect('/');
+    };
+};
+
 // NEW DASHBOARD CONTROLLER
 const showDashboard = (req, res) => {
     const user = req.session.user;
@@ -98,5 +114,6 @@ export {
     processLogout,
     processUserRegistrationForm,
     requireLogin,
+    requireRole,
     showDashboard
 };

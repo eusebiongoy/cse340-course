@@ -17,31 +17,33 @@
             </p>
 
             <!-- Edit link added here -->
-            <p>
-                <a href="/edit-organization/<%= organizationDetails.organization_id %>">
-                    Edit Organization
-                </a>
-            </p>
-
-            <h3>Service Projects</h3>
-
-            <ul>
-                <% if (projects && projects.length> 0) { %>
-                    <% projects.forEach(project=> { %>
-                        <li>
-                            <a href="/project/<%= project.project_id %>">
-                                <%= project.title %>
-                            </a>
-                        </li>
-                        <% }) %>
-                            <% } else { %>
-                                <li>No projects available for this organization.</li>
-                                <% } %>
-            </ul>
-
-            <% } else { %>
-                <p>Organization not found.</p>
+            <% if (user && user.role_name==='admin' ) { %>
+                <p>
+                    <a href="/edit-organization/<%= organizationDetails.organization_id %>">
+                        Edit Organization
+                    </a>
+                </p>
                 <% } %>
+
+                    <h3>Service Projects</h3>
+
+                    <ul>
+                        <% if (projects && projects.length> 0) { %>
+                            <% projects.forEach(project=> { %>
+                                <li>
+                                    <a href="/project/<%= project.project_id %>">
+                                        <%= project.title %>
+                                    </a>
+                                </li>
+                                <% }) %>
+                                    <% } else { %>
+                                        <li>No projects available for this organization.</li>
+                                        <% } %>
+                    </ul>
+
+                    <% } else { %>
+                        <p>Organization not found.</p>
+                        <% } %>
 
     </main>
 

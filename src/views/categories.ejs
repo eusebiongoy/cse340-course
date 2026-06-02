@@ -9,40 +9,44 @@
         <h2>Categories</h2>
 
         <!-- ACTION BUTTON -->
-        <p style="margin-bottom: 20px;">
-            <a href="/new-category" class="tag">
-                + Create New Category
-            </a>
-        </p>
+        <% if (user && user.role_name==='admin' ) { %>
+            <p style="margin-bottom: 20px;">
+                <a href="/new-category" class="tag">
+                    + Create New Category
+                </a>
+            </p>
+            <% } %>
 
-        <section class="categories">
+                <section class="categories">
 
-            <div class="category-grid">
+                    <div class="category-grid">
 
-                <% categories.forEach(category=> { %>
+                        <% categories.forEach(category=> { %>
 
-                    <div class="category-card">
+                            <div class="category-card">
 
-                        <h3>
-                            <a href="/category/<%= category.category_id %>">
-                                <%= category.name %>
-                            </a>
-                        </h3>
+                                <h3>
+                                    <a href="/category/<%= category.category_id %>">
+                                        <%= category.name %>
+                                    </a>
+                                </h3>
 
-                        <!-- EDIT LINK -->
-                        <p style="margin-top: 10px;">
-                            <a href="/edit-category/<%= category.category_id %>" class="tag">
-                                Edit
-                            </a>
-                        </p>
+                                <!-- EDIT LINK -->
+                                <% if (user && user.role_name==='admin' ) { %>
+                                    <p style="margin-top: 10px;">
+                                        <a href="/edit-category/<%= category.category_id %>" class="tag">
+                                            Edit
+                                        </a>
+                                    </p>
+                                    <% } %>
+
+                            </div>
+
+                            <% }) %>
 
                     </div>
 
-                    <% }) %>
-
-            </div>
-
-        </section>
+                </section>
 
     </main>
 

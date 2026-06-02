@@ -40,6 +40,7 @@ import {
     processLoginForm,
     processLogout,
     requireLogin,
+    requireRole,
     showDashboard
 } from './controllers/users.js';
 
@@ -55,18 +56,20 @@ router.get('/', showHomePage);
 router.get('/organizations', showOrganizationsPage);
 router.get('/organization/:id', showOrganizationDetailsPage);
 
-router.get('/new-organization', showNewOrganizationForm);
+router.get('/new-organization', requireRole('admin'), showNewOrganizationForm);
 
 router.post(
     '/new-organization',
+    requireRole('admin'),
     organizationValidation,
     processNewOrganizationForm
 );
 
-router.get('/edit-organization/:id', showEditOrganizationForm);
+router.get('/edit-organization/:id', requireRole('admin'), showEditOrganizationForm);
 
 router.post(
     '/edit-organization/:id',
+    requireRole('admin'),
     organizationValidation,
     processEditOrganizationForm
 );
@@ -77,18 +80,20 @@ router.post(
 router.get('/projects', showProjectsPage);
 router.get('/project/:id', showProjectDetailsPage);
 
-router.get('/new-project', showNewProjectForm);
+router.get('/new-project', requireRole('admin'), showNewProjectForm);
 
 router.post(
     '/new-project',
+    requireRole('admin'),
     projectValidation,
     processNewProjectForm
 );
 
-router.get('/edit-project/:id', showEditProjectForm);
+router.get('/edit-project/:id', requireRole('admin'), showEditProjectForm);
 
 router.post(
     '/edit-project/:id',
+    requireRole('admin'),
     projectValidation,
     processEditProjectForm
 );
@@ -100,16 +105,35 @@ router.get('/categories', showCategoriesPage);
 router.get('/category/:id', showCategoryDetailsPage);
 
 // CREATE CATEGORY
-router.get('/new-category', showCreateCategoryForm);
-router.post('/new-category', processCreateCategory);
+router.get('/new-category', requireRole('admin'), showCreateCategoryForm);
+
+router.post(
+    '/new-category',
+    requireRole('admin'),
+    processCreateCategory
+);
 
 // EDIT CATEGORY
-router.get('/edit-category/:id', showEditCategoryForm);
-router.post('/edit-category/:id', processEditCategory);
+router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
+
+router.post(
+    '/edit-category/:id',
+    requireRole('admin'),
+    processEditCategory
+);
 
 // ASSIGN CATEGORIES
-router.get('/assign-categories/:projectId', showAssignCategoriesForm);
-router.post('/assign-categories/:projectId', processAssignCategoriesForm);
+router.get(
+    '/assign-categories/:projectId',
+    requireRole('admin'),
+    showAssignCategoriesForm
+);
+
+router.post(
+    '/assign-categories/:projectId',
+    requireRole('admin'),
+    processAssignCategoriesForm
+);
 
 // ================================
 // USER AUTH ROUTES
