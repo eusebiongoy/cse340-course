@@ -12,12 +12,41 @@
         <p>Username: <%= email %>
         </p>
 
-        <!-- NEW: Admin-only Users link -->
+        <!-- Admin-only Users link -->
         <% if (user && user.role_name==='admin' ) { %>
             <p>
                 <a href="/users">View All Users</a>
             </p>
             <% } %>
+
+                <hr>
+
+                <h3>Projects You Are Volunteering For</h3>
+
+                <% if (volunteerProjects && volunteerProjects.length> 0) { %>
+
+                    <ul>
+                        <% volunteerProjects.forEach(project=> { %>
+                            <li>
+                                <a href="/project/<%= project.projectid %>">
+                                    <%= project.title %>
+                                </a>
+
+                                <form action="/project/<%= project.projectid %>/unvolunteer" method="POST"
+                                    style="display:inline;">
+                                    <button type="submit">
+                                        Remove
+                                    </button>
+                                </form>
+                            </li>
+                            <% }) %>
+                    </ul>
+
+                    <% } else { %>
+
+                        <p>You are not volunteering for any projects yet.</p>
+
+                        <% } %>
 
     </main>
 

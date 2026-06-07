@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS organization CASCADE;
+DROP TABLE IF EXISTS user_projects CASCADE;
 
 -- ========================================
 -- ORGANIZATION TABLE
@@ -141,6 +142,30 @@ FROM users u
 JOIN roles r ON u.role_id = r.role_id;
 
 DELETE FROM users WHERE email = 'test@example.com';
+
+-- ========================================
+-- USER PROJECT VOLUNTEERS TABLE
+-- ========================================
+
+CREATE TABLE user_projects (
+    user_project_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    projectid INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_project
+        FOREIGN KEY (projectid)
+        REFERENCES projects(projectid)
+        ON DELETE CASCADE,
+
+    CONSTRAINT unique_user_project
+        UNIQUE (user_id, projectid)
+);
 
 -- ========================================
 -- FINAL CHECKS

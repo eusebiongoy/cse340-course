@@ -19,7 +19,9 @@ import {
     processNewProjectForm,
     projectValidation,
     showEditProjectForm,
-    processEditProjectForm
+    processEditProjectForm,
+    volunteerForProject,
+    removeVolunteerFromProject
 } from './controllers/projects.js';
 
 import {
@@ -41,7 +43,7 @@ import {
     processLogout,
     requireLogin,
     requireRole,
-    showDashboard,
+    showDashboard,   // ✅ FIXED (back to correct name)
     showUsersPage
 } from './controllers/users.js';
 
@@ -100,12 +102,26 @@ router.post(
 );
 
 // ================================
+// VOLUNTEER ROUTES
+// ================================
+router.post(
+    '/project/:id/volunteer',
+    requireLogin,
+    volunteerForProject
+);
+
+router.post(
+    '/project/:id/unvolunteer',
+    requireLogin,
+    removeVolunteerFromProject
+);
+
+// ================================
 // CATEGORIES
 // ================================
 router.get('/categories', showCategoriesPage);
 router.get('/category/:id', showCategoryDetailsPage);
 
-// CREATE CATEGORY
 router.get('/new-category', requireRole('admin'), showCreateCategoryForm);
 
 router.post(
@@ -114,7 +130,6 @@ router.post(
     processCreateCategory
 );
 
-// EDIT CATEGORY
 router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
 
 router.post(
@@ -123,7 +138,6 @@ router.post(
     processEditCategory
 );
 
-// ASSIGN CATEGORIES
 router.get(
     '/assign-categories/:projectId',
     requireRole('admin'),
@@ -142,16 +156,18 @@ router.post(
 router.get('/register', showUserRegistrationForm);
 router.post('/register', processUserRegistrationForm);
 
-// Login routes
 router.get('/login', showLoginForm);
 router.post('/login', processLoginForm);
+
 router.get('/logout', processLogout);
 
-// Protected dashboard route
+// ================================
+// DASHBOARD (FIXED)
+// ================================
 router.get('/dashboard', requireLogin, showDashboard);
 
 // ================================
-// 👇 NEW USERS PAGE (ADMIN ONLY)
+// USERS PAGE (ADMIN ONLY)
 // ================================
 router.get('/users', requireLogin, requireRole('admin'), showUsersPage);
 

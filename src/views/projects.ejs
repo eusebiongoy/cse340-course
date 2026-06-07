@@ -19,6 +19,7 @@
 
             <tbody>
                 <% projects.forEach(project=> { %>
+
                     <% const date=new Date(project.date); const formattedDate=date.toLocaleDateString('en-US', {
                         year: 'numeric' , month: 'long' , day: 'numeric' }); let orgClass="" ; if
                         (project.organization_name==="BrightFuture Builders" ) { orgClass="org-blue" ; } else if
@@ -31,6 +32,7 @@
                             </td>
 
                             <td>
+                                <!-- FIXED: use project_id (from SQL alias) -->
                                 <a href="/project/<%= project.project_id %>">
                                     <%= project.title %>
                                 </a>

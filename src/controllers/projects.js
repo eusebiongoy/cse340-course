@@ -3,7 +3,12 @@ import {
     getProjectDetails,
     getCategoriesByProjectId,
     createProject,
-    updateProject
+    updateProject,
+
+    addVolunteer,
+    removeVolunteer,
+    isUserVolunteer,
+    getUserVolunteerProjects
 } from '../models/projects.js';
 
 import { getAllOrganizations } from '../models/organizations.js';
@@ -32,13 +37,61 @@ const showProjectDetailsPage = async (req, res) => {
     const project = await getProjectDetails(projectId);
     const categories = await getCategoriesByProjectId(projectId);
 
+    let isVolunteer = false;
+
+    if (req.session.user) {
+        isVolunteer = await isUserVolunteer(req.session.user.user_id, projectId);
+    }
+
     const title = 'Service Project Details';
 
     res.render('project', { 
         title, 
         project,
-        categories
+        categories,
+        isVolunteer,
+
+        // ⭐ FIX: THIS IS WHAT MAKES BUTTON APPEAR
+        user: req.session.user
     });
+};
+
+/**
+ * Volunteer for a project
+ */
+const volunteerForProject = async (req, res) => {
+    try {
+        const userId = req.session.user.user_id;
+        const projectId = req.params.id;
+
+        await addVolunteer(userId, projectId);
+
+        req.flash('success', 'You are now volunteering for this project!');
+        res.redirect(`/project/${projectId}`);
+    } catch (error) {
+        console.error('Error volunteering:', error);
+        req.flash('error', 'Error signing up as volunteer.');
+        res.redirect(`/project/${req.params.id}`);
+    }
+};
+
+/**
+ * Remove volunteer from project
+ */
+const removeVolunteerFromProject = async (req, res) => {
+    try {
+        const userId = req.session.user.user_id;
+        const projectId = req.params.id;
+
+        await removeVolunteer(userId, projectId);
+
+        req.flash('success', 'You have removed yourself as a volunteer.');
+        res.redirect(`/project/${projectId}`);
+    } catch (error) {
+        console.error('Error removing volunteer:', error);
+        req.flash('error', 'Error removing volunteer.');
+        res.redirect(`/project/${req.params.id}`);
+    }
 };
 
 /**
@@ -173,5 +226,7 @@ export {
     processNewProjectForm,
     showEditProjectForm,
     processEditProjectForm,
-    projectValidation
+    projectValidation,
+    volunteerForProject,
+    removeVolunteerFromProject
 };

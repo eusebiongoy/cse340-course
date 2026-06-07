@@ -145,7 +145,7 @@ const createProject = async (title, description, location, date, organizationId)
     const query = `
       INSERT INTO projects (title, description, location, projectdate, organizationid)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING project_id;
+      RETURNING projectid;
     `;
 
     const queryParams = [title, description, location, date, organizationId];
@@ -156,10 +156,10 @@ const createProject = async (title, description, location, date, organizationId)
     }
 
     if (process.env.ENABLE_SQL_LOGGING === 'true') {
-        console.log('Created new project with ID:', result.rows[0].project_id);
+        console.log('Created new project with ID:', result.rows[0].projectid);
     }
 
-    return result.rows[0].project_id;
+    return result.rows[0].projectid;
 };
 
 /**
@@ -208,6 +208,69 @@ const updateProject = async (
 };
 
 
+
+// =====================================================
+//  ADDED: VOLUNTEER FUNCTIONS (NEW FEATURE)
+// =====================================================
+
+/**
+ * Add volunteer to a project
+ */
+async function addVolunteer(userId, projectId) {
+    const query = `
+        INSERT INTO user_projects (user_id, projectid)
+        VALUES ($1, $2)
+        ON CONFLICT (user_id, projectid) DO NOTHING;
+    `;
+
+    await db.query(query, [userId, projectId]);
+}
+
+/**
+ * Remove volunteer from a project
+ */
+async function removeVolunteer(userId, projectId) {
+    const query = `
+        DELETE FROM user_projects
+        WHERE user_id = $1 AND projectid = $2;
+    `;
+
+    await db.query(query, [userId, projectId]);
+}
+
+/**
+ * Check if user is volunteering for a project
+ */
+async function isUserVolunteer(userId, projectId) {
+    const query = `
+        SELECT 1
+        FROM user_projects
+        WHERE user_id = $1 AND projectid = $2;
+    `;
+
+    const result = await db.query(query, [userId, projectId]);
+    return result.rowCount > 0;
+}
+
+/**
+ * Get all projects a user is volunteering for
+ */
+async function getUserVolunteerProjects(userId) {
+    const query = `
+        SELECT p.*
+        FROM projects p
+        JOIN user_projects up
+            ON p.projectid = up.projectid
+        WHERE up.user_id = $1
+        ORDER BY p.projectdate;
+    `;
+
+    const result = await db.query(query, [userId]);
+    return result.rows;
+};
+
+
+
 // Export model functions
 export { 
     getAllProjects, 
@@ -217,5 +280,11 @@ export {
     getProjectsByCategory,
     getCategoriesByProjectId,
     createProject,
-    updateProject
+    updateProject,
+
+    //  ADDED EXPORTS
+    addVolunteer,
+    removeVolunteer,
+    isUserVolunteer,
+    getUserVolunteerProjects
 };

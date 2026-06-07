@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import db from '../models/db.js';
 import { createUser, authenticateUser } from '../models/users.js';
 
+// ⭐ ADDED
+import { getUserVolunteerProjects } from '../models/projects.js';
+
 const showUserRegistrationForm = (req, res) => {
     res.render('register', { title: 'Register' });
 };
@@ -97,19 +100,38 @@ const requireRole = (role) => {
     };
 };
 
-// NEW DASHBOARD CONTROLLER
-const showDashboard = (req, res) => {
+// ================================
+// ⭐ UPDATED DASHBOARD CONTROLLER
+// ================================
+const showDashboard = async (req, res) => {
     const user = req.session.user;
 
-    res.render('dashboard', {
-        title: 'Dashboard',
-        name: user.name,
-        email: user.email
-    });
+    try {
+        const volunteerProjects = await getUserVolunteerProjects(user.user_id);
+
+        res.render('dashboard', {
+            title: 'Dashboard',
+            name: user.name,
+            email: user.email,
+            user: user,
+            volunteerProjects
+        });
+
+    } catch (error) {
+        console.error('Error loading dashboard:', error);
+
+        res.render('dashboard', {
+            title: 'Dashboard',
+            name: user.name,
+            email: user.email,
+            user: user,
+            volunteerProjects: []
+        });
+    }
 };
 
 //
-// 👇 NEW: USERS PAGE CONTROLLER (ADMIN ONLY VIEW)
+// 👇 USERS PAGE CONTROLLER (ADMIN ONLY VIEW)
 //
 const showUsersPage = async (req, res) => {
     try {

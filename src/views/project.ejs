@@ -41,7 +41,9 @@
                 <p>No categories assigned</p>
                 <% } %>
 
+                    <!-- Admin actions -->
                     <% if (user && user.role_name==='admin' ) { %>
+
                         <p>
                             <a href="/assign-categories/<%= project.project_id %>">
                                 Edit Categories
@@ -53,7 +55,42 @@
                                 Edit Project
                             </a>
                         </p>
+
                         <% } %>
+
+                            <!-- ===================================== -->
+                            <!-- ⭐ VOLUNTEER SECTION (FIXED) -->
+                            <!-- ===================================== -->
+
+                            <% if (user) { %>
+
+                                <% if (isVolunteer) { %>
+
+                                    <p style="color: green; font-weight: bold;">
+                                        You are volunteering for this project.
+                                    </p>
+
+                                    <form action="/project/<%= project.project_id %>/unvolunteer" method="POST">
+                                        <button type="submit">
+                                            Remove volunteering
+                                        </button>
+                                    </form>
+
+                                    <% } else { %>
+
+                                        <form action="/project/<%= project.project_id %>/volunteer" method="POST">
+                                            <button type="submit">
+                                                Volunteer for this project
+                                            </button>
+                                        </form>
+
+                                        <% } %>
+
+                                            <% } else { %>
+
+                                                <p>Please log in to volunteer for this project.</p>
+
+                                                <% } %>
 
     </main>
 
